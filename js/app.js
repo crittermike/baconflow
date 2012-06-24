@@ -7,7 +7,7 @@ var html5mode = function($locationProvider) {
 var routes = function($routeProvider) {
   $routeProvider.when('/', {templateUrl: 'partials/app.html', controller: AppCtrl});
   $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: LoginCtrl});
-  $routeProvider.when('/register', {templateUrl: 'partials/register.html', controller: RegisterCtrl});
+  $routeProvider.when('/account', {templateUrl: 'partials/account.html', controller: AccountCtrl});
   $routeProvider.otherwise({redirectTo: '/app'});
 }
 
