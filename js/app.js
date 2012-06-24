@@ -1,10 +1,17 @@
 'use strict';
 
+var html5mode = function($locationProvider) {
+  $locationProvider.html5Mode(true);
+}
+
+var routes = function($routeProvider) {
+  $routeProvider.when('/', {templateUrl: 'partials/app.html', controller: AppCtrl});
+  $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: LoginCtrl});
+  $routeProvider.when('/register', {templateUrl: 'partials/register.html', controller: RegisterCtrl});
+  $routeProvider.otherwise({redirectTo: '/app'});
+}
 
 // Declare app level module which depends on filters, and services
-angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives']).
-  config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/view1', {templateUrl: 'partials/partial1.html', controller: MyCtrl1});
-    $routeProvider.when('/view2', {templateUrl: 'partials/partial2.html', controller: MyCtrl2});
-    $routeProvider.otherwise({redirectTo: '/view1'});
-  }]);
+angular.module('canny', ['canny.filters', 'canny.services', 'canny.directives'])
+  .config(html5mode)
+  .config(routes);
