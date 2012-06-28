@@ -4,9 +4,10 @@
 
 angular.module('baconflowServices', [])
   .service('parseService', function() {
+    Parse.initialize("hCnt4S3bcWaZRDUQxoz4knP8KvYncQ4UGkwqwIq1", "PrQttkfi0FHWEQwoBt3iMFX2BkqVOBpwlyS0BQB6");
     return {
+
       login:function (email, password) {
-        Parse.initialize("hCnt4S3bcWaZRDUQxoz4knP8KvYncQ4UGkwqwIq1", "PrQttkfi0FHWEQwoBt3iMFX2BkqVOBpwlyS0BQB6");
         Parse.User.logIn(email, password, {
           success: function(user) {
             return [true, user];
@@ -17,19 +18,21 @@ angular.module('baconflowServices', [])
         });
       },
 
+      logout:function() {
+        Parse.User.logOut();
+      }
+
       saveUser:function (email, password, limit) {
-        Parse.initialize("hCnt4S3bcWaZRDUQxoz4knP8KvYncQ4UGkwqwIq1", "PrQttkfi0FHWEQwoBt3iMFX2BkqVOBpwlyS0BQB6");
-        
         var user = Parse.User.current();
         if (!user) {
           user = new Parse.User();
         } 
-        user.set("username", $scope.email);
-        if ($scope.password) {
-          user.set("password", $scope.password);
+        user.set("username", email);
+        if (password) {
+          user.set("password", password);
         }
-        user.set("email", $scope.email);
-        user.set("limit", $scope.limit);
+        user.set("email", email);
+        user.set("limit", limit);
         user.signUp(null, {
           success: function(user) {
             return [true, user];
@@ -41,7 +44,11 @@ angular.module('baconflowServices', [])
       },
 
       addTransaction:function (amount) {
-        Parse.initialize("hCnt4S3bcWaZRDUQxoz4knP8KvYncQ4UGkwqwIq1", "PrQttkfi0FHWEQwoBt3iMFX2BkqVOBpwlyS0BQB6");
+        var user = Parse.User.current();
+
+	$scope.limit = user.get("limit");
+	$scope.current = user.get("current");
+	$scope.current += $scope.curTransaction;
       }
     };
   })
