@@ -8,5 +8,5 @@ var routes = function($routeProvider) {
 }
 
 // Declare app level module which depends on filters, and services
-angular.module('baconflow', ['baconflow.filters', 'baconflow.services', 'baconflow.directives'])
+angular.module('baconflow', ['baconflowFilters', 'baconflowServices', 'baconflowDirectives'])
   .config(routes);

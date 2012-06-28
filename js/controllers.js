@@ -14,7 +14,7 @@ function AppCtrl($scope) {
   }
 }
 
-function LoginCtrl($scope) {
+function LoginCtrl($scope, parseService) {
   $scope.loginUser = function() {
     var success = parseService.login($scope.email, $scope.password);
     if (!success[0]) {

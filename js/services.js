@@ -2,8 +2,8 @@
 
 /* Services */
 
-angular.module('baconflow.services', [])
-  .service('parseService', function () {
+angular.module('baconflowServices', [])
+  .service('parseService', function() {
     return {
       login:function (email, password) {
         Parse.initialize("hCnt4S3bcWaZRDUQxoz4knP8KvYncQ4UGkwqwIq1", "PrQttkfi0FHWEQwoBt3iMFX2BkqVOBpwlyS0BQB6");
@@ -16,6 +16,7 @@ angular.module('baconflow.services', [])
           }
         });
       },
+
       saveUser:function (email, password, limit) {
         Parse.initialize("hCnt4S3bcWaZRDUQxoz4knP8KvYncQ4UGkwqwIq1", "PrQttkfi0FHWEQwoBt3iMFX2BkqVOBpwlyS0BQB6");
         
@@ -38,6 +39,7 @@ angular.module('baconflow.services', [])
           }
         });
       },
+
       addTransaction:function (amount) {
         Parse.initialize("hCnt4S3bcWaZRDUQxoz4knP8KvYncQ4UGkwqwIq1", "PrQttkfi0FHWEQwoBt3iMFX2BkqVOBpwlyS0BQB6");
       }
