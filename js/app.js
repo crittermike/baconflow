@@ -12,6 +12,6 @@ var routes = function($routeProvider) {
 }
 
 // Declare app level module which depends on filters, and services
-angular.module('canny', ['canny.filters', 'canny.services', 'canny.directives'])
+angular.module('baconflow', ['baconflow.filters', 'baconflow.services', 'baconflow.directives'])
   .config(html5mode)
   .config(routes);
