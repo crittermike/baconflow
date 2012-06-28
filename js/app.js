@@ -1,9 +1,5 @@
 'use strict';
 
-var html5mode = function($locationProvider) {
-  $locationProvider.html5Mode(true);
-}
-
 var routes = function($routeProvider) {
   $routeProvider.when('/', {templateUrl: 'partials/app.html', controller: AppCtrl});
   $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: LoginCtrl});
@@ -13,5 +9,4 @@ var routes = function($routeProvider) {
 
 // Declare app level module which depends on filters, and services
 angular.module('baconflow', ['baconflow.filters', 'baconflow.services', 'baconflow.directives'])
-  .config(html5mode)
   .config(routes);
