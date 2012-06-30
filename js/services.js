@@ -30,12 +30,12 @@ angular.module('baconflowServices', [])
         if (!user) {
           user = new Parse.User();
         } 
-        user.set("username", $scope.email);
-        if ($scope.password) {
-          user.set("password", $scope.password);
+        user.set("username", email);
+        if (password) {
+          user.set("password", password);
         }
-        user.set("email", $scope.email);
-        user.set("limit", $scope.limit);
+        user.set("email", email);
+        user.set("limit", limit);
         user.signUp(null, {
           success: function(user) {
             return [true, user];
