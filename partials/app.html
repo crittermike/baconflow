@@ -1,8 +1,15 @@
-<div ng-controller="AppCtrl">
-  <form class="form-inline" ng-submit="addTransaction()">
-    <input type="number" step="any" class="input-mini" min="0" ng-model="curTransaction"  placeholder="3.49">
-    <input class="btn btn-primary" type="submit" value="Save">
+<div ng-controller="AppCtrl" class="row">
+  <form class="span6 add form-inline" ng-submit="addTransaction()">
+    <input type="number" step="any" class="span4" min="0" ng-model="curTransaction"  placeholder="3.49">
+    <input class="btn btn-primary span2" type="submit" value="Save">
   </form>
-
-  <h3>${{limit - current}} remaining</h3>
+  <div class="stats span2">
+    <p><span>${{limit - current}}</span> total remaining</p>
+  </div>
+  <div class="stats span2">
+    <p><span>${{limit - current}}</span> total remaining</p>
+  </div>
+  <div class="stats span2">
+    <p><span>${{limit - current}}</span> total remaining</p>
+  </div>
 </div>

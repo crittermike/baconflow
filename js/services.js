@@ -4,22 +4,30 @@
 
 angular.module('baconflowServices', [])
   .service('parseService', function() {
+    Parse.initialize("hCnt4S3bcWaZRDUQxoz4knP8KvYncQ4UGkwqwIq1", "PrQttkfi0FHWEQwoBt3iMFX2BkqVOBpwlyS0BQB6");
     return {
       login:function (email, password) {
-        Parse.initialize("hCnt4S3bcWaZRDUQxoz4knP8KvYncQ4UGkwqwIq1", "PrQttkfi0FHWEQwoBt3iMFX2BkqVOBpwlyS0BQB6");
+        var response;
         Parse.User.logIn(email, password, {
           success: function(user) {
-            return [true, user];
+            response = [true, user];
           },
           error: function(user, error) {
-            return [false, "Error: " + error.code + " " + error.message];
+            response = [false, "Error: " + error.code + " " + error.message];
           }
         });
+        alert(response) // still undefined;
+      },
+
+      logout: function() {
+        Parse.User.logOut();
+      },
+
+      loggedIn: function() {
+        return Parse.User.current();
       },
 
       saveUser:function (email, password, limit) {
-        Parse.initialize("hCnt4S3bcWaZRDUQxoz4knP8KvYncQ4UGkwqwIq1", "PrQttkfi0FHWEQwoBt3iMFX2BkqVOBpwlyS0BQB6");
-        
         var user = Parse.User.current();
         if (!user) {
           user = new Parse.User();
@@ -41,7 +49,7 @@ angular.module('baconflowServices', [])
       },
 
       addTransaction:function (amount) {
-        Parse.initialize("hCnt4S3bcWaZRDUQxoz4knP8KvYncQ4UGkwqwIq1", "PrQttkfi0FHWEQwoBt3iMFX2BkqVOBpwlyS0BQB6");
+        return 1;
       }
     };
   })
