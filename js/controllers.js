@@ -66,14 +66,19 @@ function AppCtrl($scope) {
   if (user) {
     $scope.limit = user.get("limit");
     $scope.current = 0;
+    var thisMonth = d.getMonth();
+    var transDate;
     var query = new Parse.Query(Transaction);
     query.equalTo("user", user);
     query.find({
       success: function(results) {
         $scope.$apply(function() {
           angular.forEach(results, function(val, key) {
-            $scope.transactions.push(val.attributes.amount);
-            $scope.current += val.attributes.amount;
+            transDate = new Date(val.createdAt);
+            if (transDate.getMonth() == thisMonth) {
+              $scope.transactions.push(val.attributes.amount);
+              $scope.current += val.attributes.amount;
+            }
           });
         });
       }
