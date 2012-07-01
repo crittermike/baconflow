@@ -1,15 +1,12 @@
 <div ng-controller="AppCtrl" class="row">
   <form class="span6 add form-inline" ng-submit="addTransaction()">
-    <input type="number" step="any" class="span4" min="0" ng-model="curTransaction"  placeholder="3.49">
-    <input class="btn btn-primary span2" type="submit" value="Save">
+    <input type="number" step="any" class="span4" min="0" ng-model="amount"  placeholder="3.49">
+    <input class="btn btn-primary span2" type="submit" value="Add">
   </form>
-  <div class="stats span2">
-    <p><span>${{limit - current}}</span> total remaining</p>
+  <div class="stats span3">
+    <p><span>${{(limit - current).toFixed(2)}}</span> left this month</p>
   </div>
-  <div class="stats span2">
-    <p><span>${{limit - current}}</span> total remaining</p>
-  </div>
-  <div class="stats span2">
-    <p><span>${{limit - current}}</span> total remaining</p>
+  <div class="stats span3">
+    <p><span>${{((limit - current) / (daysInMonth - curDay + 1)).toFixed(2)}}</span> left per day</p>
   </div>
 </div>

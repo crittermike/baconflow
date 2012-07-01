@@ -2,6 +2,10 @@
   body {
     padding-top: 60px;
   }
+  form.add input {
+    font-size: 25px;
+    padding: 8px;
+  }
 }
 
 .modal form {
@@ -11,7 +15,7 @@
 .stats {
   text-align: center;
   font-size: 20px;
-  margin-top: 10px;
+  padding-top: 20px;
 }
 .stats span {
   font-size: 40px;
@@ -22,8 +26,6 @@
 }
 
 form.add input {
-  margin-top: 10px;
-  font-size: 25px;
-  padding: 8px;
+  margin-top: 20px;
 }
 

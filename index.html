@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="baconflow">
+<html lang="en" ng-app>
 <head>
   <meta charset="utf-8">
   <title>Baconflow - Easy one-envelope budgeting</title>
@@ -7,8 +7,8 @@
   <link rel="stylesheet" href="css/bootstrap-responsive.css"/>
   <link rel="stylesheet" href="css/app.css"/>
 </head>
-<body>
-  <div ng-controller="UserCtrl" class="navbar navbar-fixed-top">
+<body ng-controller="UserCtrl">
+  <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -19,12 +19,12 @@
         <a class="brand" href="/#">Baconflow</a>
         <div class="nav-collapse">
           <ul class="nav pull-right">
-            <li><a data-toggle="modal" ng-show="!loggedIn()" href="#loginForm">Log In</a></li>
-            <li><a data-toggle="modal" ng-show="!loggedIn()" href="#accountForm">Register</a></li>
-            <li><a data-toggle="modal" ng-show="loggedIn()" href="#accountForm">Account</a></li>
-            <li><a data-toggle="modal" ng-show="loggedIn()" ng-click="logout()" href="#">Log Out</a></li>
+            <li><a data-toggle="modal" ng-show="!loggedIn" href="#loginForm">Log In</a></li>
+            <li><a data-toggle="modal" ng-show="!loggedIn" href="#accountForm">Register</a></li>
+            <li><a data-toggle="modal" ng-show="loggedIn" href="#accountForm">Account</a></li>
+            <li><a ng-show="loggedIn" ng-click="logout()" href="#">Log Out</a></li>
           </ul>
-        </div><!--/.nav-collapse -->
+        </div>
       </div>
     </div>
   </div>
@@ -33,8 +33,77 @@
     <div ng-include src="'partials/app.html'"></div>
   </div>
 
-  <div ng-include src="'partials/account.html'"></div>
-  <div ng-include src="'partials/login.html'"></div>
+<div id="loginForm" class="modal hide">
+  <form class="form-horizontal" ng-submit="login()">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">×</button>
+      <h3>Log In</h3>
+    </div>
+    <div class="modal-body">
+      <div class="alert alert-error" ng-show="loginError">{{loginError}}</div>
+      <div class="control-group">
+        <label class="control-label" for="email">Email</label>
+        <div class="controls">
+          <div class="input-prepend">
+            <span class="add-on">@</span><input type="text" ng-model="email" placeholder="you@yours.com" />
+          </div>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="password">Password</label>
+        <div class="controls">
+          <div class="input-prepend">
+            <span class="add-on"><i class="icon-lock"></i></span><input type="password" ng-model="password" placeholder="hunter2" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn" data-dismiss="modal">Close</a>
+      <button type="submit" class="btn btn-primary">Log in</button>
+    </div>
+  </form>
+</div>
+
+<div id="accountForm" class="modal hide">
+  <form class="form-horizontal" ng-submit="saveUser()">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">×</button>
+      <h3>Your Account</h3>
+    </div>
+    <div class="modal-body">
+      <div class="control-group">
+        <label class="control-label" for="email">Email</label>
+        <div class="controls">
+          <div class="input-prepend">
+            <span class="add-on">@</span><input type="text" ng-model="email" placeholder="you@yours.com" />
+          </div>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="password">Password</label>
+        <div class="controls">
+          <div class="input-prepend">
+            <span class="add-on"><i class="icon-lock"></i></span><input type="password" ng-model="password" placeholder="hunter2" />
+          </div>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="limit">Monthly Budget</label>
+        <div class="controls">
+          <div class="input-prepend">
+            <span class="add-on">$</span><input type="number" step="any" ng-model="limit" placeholder="500" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn" data-dismiss="modal">Close</a>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+
 
   <script type="text/javascript" src="lib/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.0.5.min.js"></script>
