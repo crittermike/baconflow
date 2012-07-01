@@ -2,10 +2,6 @@
   body {
     padding-top: 60px;
   }
-  form.add input {
-    font-size: 25px;
-    padding: 8px;
-  }
 }
 
 .modal form {
@@ -18,11 +14,11 @@
   padding-top: 20px;
 }
 .stats span {
-  font-size: 40px;
+  font-size: 30px;
   display: block;
   font-family: Inconsolata, "Deja Vu Sans Mono", Consolas, monospace;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 form.add input {

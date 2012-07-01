@@ -1,7 +1,7 @@
 <div ng-controller="AppCtrl" class="row">
   <form class="span6 add form-inline" ng-submit="addTransaction()">
-    <input type="number" step="any" class="span4" min="0" ng-model="amount"  placeholder="3.49">
-    <input class="btn btn-primary span2" type="submit" value="Add">
+    <input type="number" step="any" class="span3" min="0" ng-model="amount"  placeholder="$3.49">
+    <input class="btn btn-primary btn-large span3" type="submit" value="Add Transaction">
   </form>
   <div class="stats span3">
     <p><span>${{(limit - current).toFixed(2)}}</span> left this month</p>
