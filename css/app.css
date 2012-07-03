@@ -24,10 +24,10 @@ hr {
   display: block;
   font-family: Inconsolata, "Deja Vu Sans Mono", Consolas, monospace;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
 form.add input[type=number] {
-  font-size: 18px;
+  font-size: 16px;
 }
 form.add input.btn {
   margin-top: 20px;
@@ -40,6 +40,9 @@ ul.transactions {
 ul.transactions li {
   padding: 9px 0;
   border-bottom: 1px solid #E5E5E5;
+}
+ul.transactions li:last-child {
+  border-bottom: none;
 }
 ul.transactions li.odd {
   background: #f7f7f7;
