@@ -40,7 +40,7 @@
               <ul class="transactions">
                 <li ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="transaction in transactions">
                   <span class="badge badge-important"><a ng-click="removeTransaction(transaction)" href="#"><i class="icon-remove icon-white"></i></a></span>
-                  {{transaction.attributes.amount.toFixed(2)}}
+                  <strong>{{transaction.attributes.amount.toFixed(2)}}</strong> {{transaction.createdAt | date:'EEE, MM/dd, h:mma'}}
                 </li>
               </ul>
             </div>

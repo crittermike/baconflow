@@ -76,7 +76,7 @@ function AppCtrl($scope) {
           angular.forEach(results, function(val, key) {
             transDate = new Date(val.createdAt);
             if (transDate.getMonth() == thisMonth) {
-              $scope.transactions.push(val);
+              $scope.transactions.unshift(val);
               $scope.current += val.attributes.amount;
             }
           });

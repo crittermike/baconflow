@@ -41,6 +41,11 @@ ul.transactions li {
   padding: 9px;
   border-bottom: 1px solid #E5E5E5;
 }
+ul.transactions li strong {
+  width: 50px;
+  margin-left: 15px;
+  display: inline-block;
+}
 ul.transactions li:last-child {
   border-bottom: none;
 }
