@@ -76,7 +76,7 @@ function AppCtrl($scope) {
           angular.forEach(results, function(val, key) {
             transDate = new Date(val.createdAt);
             if (transDate.getMonth() == thisMonth) {
-              $scope.transactions.push(val.attributes.amount);
+              $scope.transactions.push(val);
               $scope.current += val.attributes.amount;
             }
           });
@@ -89,16 +89,30 @@ function AppCtrl($scope) {
     $scope.current = 0;
   }
 
+
   $scope.addTransaction = function() {
     var trans = new Transaction();
     trans.set("amount", $scope.amount);
     trans.set("user", user);
+    $scope.transactions.unshift(trans);
+    $scope.current = $scope.current + $scope.amount;
+    $scope.message = "Transaction for $" + $scope.amount.toFixed(2) + " saved.";
     trans.save(null, {
-      success: function(post) {
-        $scope.$apply(function() {
-          $scope.current = $scope.current + $scope.amount;
-        });
+      error: function(transaction, error) {
+        alert("Oops, that didn't work. Reload the page and try again, maybe?");
       }
     });
   }
+
+  $scope.removeTransaction = function(transaction) {
+    $scope.transactions.splice($scope.transactions.indexOf(transaction), 1);
+    $scope.current = $scope.current - transaction.attributes.amount;
+    $scope.message = "Transaction for $" + transaction.attributes.amount.toFixed(2) + " deleted.";
+    transaction.destroy({
+      error: function(transaction, error) {
+        alert("Oops, that didn't work. Reload the page and try again, maybe?");
+      }
+    });
+  }
+
 }

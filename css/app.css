@@ -4,14 +4,21 @@
   }
 }
 
+hr {
+  clear: both;
+  margin: 10px 0;
+}
+
 .modal form {
   margin: 0;
 }
 
 .stats {
+  float: left;
+  width: 50%;
   text-align: center;
   font-size: 20px;
-  padding-top: 20px;
+  padding: 10px 0;
 }
 .stats span {
   font-size: 30px;
@@ -20,8 +27,21 @@
   font-weight: bold;
   margin-bottom: 10px;
 }
-
-form.add input {
+form.add input[type=number] {
+  font-size: 18px;
+}
+form.add input.btn {
   margin-top: 20px;
 }
-
+ul.transactions {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+ul.transactions li {
+  padding: 9px 0;
+  border-bottom: 1px solid #E5E5E5;
+}
+ul.transactions li.odd {
+  background: #f7f7f7;
+}
