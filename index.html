@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="http://baconflow.com/img/piggy.png"/>
   <link rel="apple-touch-icon-precomposed" href="http://baconflow.com/img/piggy.png"/>
 </head>
-<body ng-controller="UserCtrl">
+<body ng-controller="BaconflowCtrl">
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
@@ -33,7 +33,57 @@
   </div>
 
   <div class="container">
-    <div ng-include src="'partials/app.html'"></div>
+    <div class="row">
+      <div ng-show="!loggedIn" class="span12"><div class="alert">You're not logged in, so this is just a demo. <a href="#loginForm" data-toggle="modal">Log in</a> or <a href="#accountForm" data-toggle="modal">sign up</a> for the full experience.</div></div>
+      <div class="span6">
+        <form class="well add form-inline" ng-submit="addTransaction()">
+          <div class="alert alert-success" ng-show="message">{{message}}</div>
+          <input type="number" step="any" class="span2" min="0" ng-model="amount"  placeholder="How much did you spend?">
+          <input class="btn btn-primary btn-large span3" type="submit" value="Add Transaction">
+        </form>
+      </div>
+      <div class="span6">
+        <div class="accordion" id="accordion2">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Stats</a>
+            </div>
+            <div id="collapseOne" class="accordion-body collapse in">
+              <div class="accordion-inner">
+                <div class="stats">
+                  <p><span>${{(limit - current).toFixed(2)}}</span> left this month</p>
+                </div>
+                <div class="stats">
+                  <p><span>${{((limit - current) / (daysInMonth - curDay + 1)).toFixed(2)}}</span> left per day</p>
+                </div>
+                <hr />
+                <div class="stats">
+                  <p><span>${{current.toFixed(2)}}</span> spent this month</p>
+                </div>
+                <div class="stats">
+                  <p><span>${{(current / curDay).toFixed(2)}}</span> spent per day</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">Transactions</a>
+            </div>
+            <div id="collapseTwo" class="accordion-body collapse">
+              <div class="accordion-inner">
+                <ul class="transactions">
+                  <li ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="transaction in transactions">
+                    <span class="badge badge-important"><a ng-click="removeTransaction(transaction)" href="#"><i class="icon-remove icon-white"></i></a></span>
+                    <strong>{{transaction.attributes.amount.toFixed(2)}}</strong> {{transaction.createdAt | date:'EEE, MM/dd, h:mma'}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 <div id="loginForm" class="modal hide">
@@ -48,7 +98,7 @@
         <label class="control-label" for="email">Email</label>
         <div class="controls">
           <div class="input-prepend">
-            <span class="add-on">@</span><input type="text" ng-model="email" placeholder="you@yours.com" />
+            <span class="add-on">@</span><input type="email" ng-model="email" required placeholder="you@yours.com" />
           </div>
         </div>
       </div>
@@ -56,7 +106,7 @@
         <label class="control-label" for="password">Password</label>
         <div class="controls">
           <div class="input-prepend">
-            <span class="add-on"><i class="icon-lock"></i></span><input type="password" ng-model="password" placeholder="hunter2" />
+            <span class="add-on"><i class="icon-lock"></i></span><input type="password" required ng-model="password" placeholder="hunter2" />
           </div>
         </div>
       </div>
@@ -79,7 +129,7 @@
         <label class="control-label" for="email">Email</label>
         <div class="controls">
           <div class="input-prepend">
-            <span class="add-on">@</span><input type="text" ng-model="email" placeholder="you@yours.com" />
+            <span class="add-on">@</span><input type="email" ng-model="email" required placeholder="you@yours.com" />
           </div>
         </div>
       </div>
@@ -89,13 +139,14 @@
           <div class="input-prepend">
             <span class="add-on"><i class="icon-lock"></i></span><input type="password" ng-model="password" placeholder="hunter2" />
           </div>
+          <p ng-show="loggedIn" class="help-block">Leave empty unless you want to change your password.</p>
         </div>
       </div>
       <div class="control-group">
         <label class="control-label" for="limit">Monthly Budget</label>
         <div class="controls">
           <div class="input-prepend">
-            <span class="add-on">$</span><input type="number" step="any" ng-model="limit" placeholder="500" />
+            <span class="add-on">$</span><input type="number" step="any" ng-model="limit" required placeholder="500" />
           </div>
         </div>
       </div>

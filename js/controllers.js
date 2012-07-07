@@ -1,59 +1,10 @@
 'use strict';
 
 /* Controllers */
-function UserCtrl($scope) {
+function BaconflowCtrl($scope) {
   Parse.initialize("hCnt4S3bcWaZRDUQxoz4knP8KvYncQ4UGkwqwIq1", "PrQttkfi0FHWEQwoBt3iMFX2BkqVOBpwlyS0BQB6");
-  $scope.loggedIn = Parse.User.current();
+  $scope.loggedIn = Parse.User.current() ? true : false;
 
-  $scope.login = function() {
-    Parse.User.logIn($scope.email, $scope.password, {
-      success: function(user) {
-        $scope.$apply(function() {
-          $scope.loggedIn = true;
-          $('#loginForm').modal('hide');
-        });
-      },
-      error: function(user, error) {
-        $scope.$apply(function() {
-          $scope.loginError = 'Incorrect login information.';
-        });
-      }
-    });
-  }
-
-  $scope.logout = function() {
-    Parse.User.logOut();
-    $scope.loggedIn = false;
-  }
-
-  $scope.saveUser = function() {
-    var user = Parse.User.current();
-    if (!user) {
-      user = new Parse.User();
-    } 
-    user.set("username", $scope.email);
-    if ($scope.password) {
-      user.set("password", $scope.password);
-    }
-    user.set("email", $scope.email);
-    user.set("limit", $scope.limit);
-    user.signUp(null, {
-      success: function(user) {
-        $scope.$apply(function() {
-          $scope.loggedIn = true;
-          $('#accountForm').modal('hide');
-        });
-      },
-      error: function(user, error) {
-        $scope.$apply(function() {
-          $scope.loginError = 'Incorrect login information.';
-        });
-      }
-    });
-  }
-}
-
-function AppCtrl($scope) {
   var user = Parse.User.current();
   var Transaction = Parse.Object.extend("Transaction");
 
@@ -63,8 +14,10 @@ function AppCtrl($scope) {
   $scope.curDay = d.getDate();
   $scope.transactions = [];
 
-  if (user) {
+  if ($scope.loggedIn) {
+    var user = Parse.User.current();
     $scope.limit = user.get("limit");
+    $scope.email = user.get("email");
     $scope.current = 0;
     var thisMonth = d.getMonth();
     var transDate;
@@ -83,13 +36,13 @@ function AppCtrl($scope) {
         });
       }
     });
-
   } else {
     $scope.limit = 1000;
     $scope.current = 0;
   }
 
 
+  /* Transaction methods */
   $scope.addTransaction = function() {
     var trans = new Transaction();
     trans.set("amount", $scope.amount);
@@ -98,20 +51,66 @@ function AppCtrl($scope) {
     $scope.current = $scope.current + $scope.amount;
     $scope.message = "Transaction for $" + $scope.amount.toFixed(2) + " saved.";
     $scope.amount = "";
-    trans.save(null, {
-      error: function(transaction, error) {
-        alert("Oops, that didn't work. Reload the page and try again, maybe?");
-      }
-    });
+    if ($scope.loggedIn) {
+      trans.save(null, {
+        error: function(transaction, error) {
+          alert("Oops, that didn't work. Reload the page and try again, maybe?");
+        }
+      });
+    }
   }
 
   $scope.removeTransaction = function(transaction) {
     $scope.transactions.splice($scope.transactions.indexOf(transaction), 1);
     $scope.current = $scope.current - transaction.attributes.amount;
     $scope.message = "Transaction for $" + transaction.attributes.amount.toFixed(2) + " deleted.";
-    transaction.destroy({
-      error: function(transaction, error) {
-        alert("Oops, that didn't work. Reload the page and try again, maybe?");
+    if ($scope.loggedIn) {
+      transaction.destroy({
+        error: function(transaction, error) {
+          alert("Oops, that didn't work. Reload the page and try again, maybe?");
+        }
+      });
+    }
+  }
+
+  /* User account methods */
+  $scope.login = function() {
+    Parse.User.logIn($scope.email, $scope.password, {
+      success: function(user) {
+        location.reload();
+      },
+      error: function(user, error) {
+        $scope.$apply(function() {
+          $scope.loginError = 'Incorrect login information.';
+        });
+      }
+    });
+  }
+
+  $scope.logout = function() {
+    Parse.User.logOut();
+    location.reload();
+  }
+
+  $scope.saveUser = function() {
+    var user = Parse.User.current();
+    if (!user) {
+      user = new Parse.User();
+    } 
+    user.set("username", $scope.email);
+    if ($scope.password) {
+      user.set("password", $scope.password);
+    }
+    user.set("email", $scope.email);
+    user.set("limit", $scope.limit);
+    user.signUp(null, {
+      success: function(user) {
+        location.reload();
+      },
+      error: function(user, error) {
+        $scope.$apply(function() {
+          $scope.accountError = "Looks like you've already signed up, no? Try logging in.";
+        });
       }
     });
   }
