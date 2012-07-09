@@ -11,7 +11,8 @@
   <link rel="apple-touch-icon-precomposed" href="http://baconflow.com/img/piggy.png"/>
 </head>
 <body ng-controller="BaconflowCtrl">
-  <div class="navbar navbar-fixed-top">
+  <div ng-show="false" class="loader"><img src="/img/piggy-nobg.png" alt="" /></div>
+  <div ng-cloak class="fade-in navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -32,7 +33,7 @@
     </div>
   </div>
 
-  <div class="container">
+  <div ng-cloak class="container fade-in">
     <div class="row">
       <div ng-show="!loggedIn" class="span12"><div class="alert">You're not logged in, so this is just a demo. <a href="#loginForm" data-toggle="modal">Log in</a> or <a href="#accountForm" data-toggle="modal">sign up</a> for the full experience.</div></div>
       <div class="span6">
