@@ -38,7 +38,7 @@
       <div class="span6">
         <form class="well add form-inline" ng-submit="addTransaction()">
           <div class="alert alert-success" ng-show="message">{{message}}</div>
-          <input type="number" step="any" class="span2" ng-model="amount"  placeholder="How much did you spend?">
+          <input type="number" step="any" class="span2" ng-model="amount" required  placeholder="How much did you spend?">
           <input class="btn btn-primary btn-large span3" type="submit" value="Add Transaction">
         </form>
       </div>
