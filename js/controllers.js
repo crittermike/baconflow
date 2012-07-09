@@ -3,8 +3,8 @@
 /* Controllers */
 function BaconflowCtrl($scope) {
   Parse.initialize("hCnt4S3bcWaZRDUQxoz4knP8KvYncQ4UGkwqwIq1", "PrQttkfi0FHWEQwoBt3iMFX2BkqVOBpwlyS0BQB6");
-  $scope.loggedIn = Parse.User.current() ? true : false;
 
+  $scope.loggedIn = Parse.User.current() ? true : false;
   var user = Parse.User.current();
   var Transaction = Parse.Object.extend("Transaction");
 
@@ -15,7 +15,6 @@ function BaconflowCtrl($scope) {
   $scope.transactions = [];
 
   if ($scope.loggedIn) {
-    var user = Parse.User.current();
     $scope.limit = user.get("limit");
     $scope.email = user.get("email");
     $scope.current = 0;
@@ -23,13 +22,14 @@ function BaconflowCtrl($scope) {
     var transDate;
     var query = new Parse.Query(Transaction);
     query.equalTo("user", user);
+    query.descending("createdAt");
     query.find({
       success: function(results) {
         $scope.$apply(function() {
           angular.forEach(results, function(val, key) {
             transDate = new Date(val.createdAt);
             if (transDate.getMonth() == thisMonth) {
-              $scope.transactions.unshift(val);
+              $scope.transactions.push(val);
               $scope.current += val.attributes.amount;
             }
           });
@@ -40,6 +40,7 @@ function BaconflowCtrl($scope) {
     $scope.limit = 1000;
     $scope.current = 0;
   }
+
 
 
   /* Transaction methods */
@@ -73,12 +74,12 @@ function BaconflowCtrl($scope) {
     }
   }
 
+
+
   /* User account methods */
   $scope.login = function() {
     Parse.User.logIn($scope.email, $scope.password, {
-      success: function(user) {
-        location.reload();
-      },
+      success: function(user) { location.reload(); },
       error: function(user, error) {
         $scope.$apply(function() {
           $scope.loginError = 'Incorrect login information.';
@@ -93,26 +94,35 @@ function BaconflowCtrl($scope) {
   }
 
   $scope.saveUser = function() {
-    var user = Parse.User.current();
-    if (!user) {
+    if (!$scope.loggedIn) {
       user = new Parse.User();
-    } 
-    user.set("username", $scope.email);
-    if ($scope.password) {
       user.set("password", $scope.password);
-    }
+    } 
+
+    user.set("username", $scope.email);
     user.set("email", $scope.email);
     user.set("limit", $scope.limit);
-    user.signUp(null, {
-      success: function(user) {
-        location.reload();
-      },
-      error: function(user, error) {
-        $scope.$apply(function() {
-          $scope.accountError = "Looks like you've already signed up, no? Try logging in.";
-        });
-      }
-    });
+
+    if ($scope.loggedIn) {
+      user.save(null, {
+        success: function(user) { location.reload(); },
+        error: function(user, error) {
+          $scope.$apply(function() {
+            $scope.accountError = "Error: " + error.message;
+          });
+        }
+      });
+    } else {
+      user.signUp(null, {
+        success: function(user) { location.reload(); },
+        error: function(user, error) {
+          $scope.$apply(function() {
+            $scope.accountError = "Error: " + error.message;
+          });
+        }
+      });
+      
+    }
   }
 
 }
