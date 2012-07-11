@@ -1,5 +1,6 @@
 CACHE MANIFEST
 index.html
+cache.manifest
 lib/parse.min.js
 lib/jquery.min.js
 lib/angular.min.js
