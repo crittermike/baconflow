@@ -22,6 +22,7 @@ function BaconflowCtrl($scope) {
     var transDate;
     var query = new Parse.Query(Transaction);
     query.equalTo("user", user);
+    query.limit(500);
     query.descending("createdAt");
     query.find({
       success: function(results) {
